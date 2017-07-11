@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.TeacherMapper">
+	<resultMap type="Teacher" id="teacherMap">
+		<id column="tid" property="id"/>
+		<result column="tname" property="name"/>
+		<collection property="courses" ofType="Course">
+			<id column="cid" property="cid"/>
+			<result column="cname" property="cname"/>
+		</collection>
+	</resultMap>
+	
+	<select id="selectOne" parameterType="int" resultMap="teacherMap">
+		select a.tid,a.tname,b.cid,b.cname from teacher a left join course b
+		on a.tid=b.tid where a.tid=#{0}
+	</select>
+	
+	<select id="selectAll" resultMap="teacherMap">
+		select a.tid,a.tname,b.cid,b.cname from teacher a left join course b
+		on a.tid=b.tid
+	</select>
+</mapper>

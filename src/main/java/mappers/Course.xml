@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.CourseMapper">
+	<resultMap type="Course" id="courseMap">
+		<id column="cid" property="cid"/>
+		<result column="cname" property="cname"/>
+		<association property="teacher" javaType="Teacher">
+			<id column="tid" property="id"/>
+			<result column="tname" property="name"/>
+		</association>
+	</resultMap>
+	<select id="selectOne" parameterType="int" resultMap="courseMap">
+		select a.cid,a.cname,b.tid,b.tname from course a
+		left join teacher b on a.tid=b.tid
+		where a.cid=#{0}
+	</select>
+	<select id="selectAll" resultMap="courseMap">
+		select a.cid,a.cname,b.tid,b.tname from course a
+		left join teacher b on a.tid=b.tid
+	</select>
+</mapper>
